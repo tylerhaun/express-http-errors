@@ -1,5 +1,5 @@
 {
-  "name": "express-http-errors",
+  "name": "@tylerhaun/express-http-errors",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
