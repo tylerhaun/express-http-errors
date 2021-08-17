@@ -8,15 +8,12 @@ function isString(value) {
 
 class ExtensibleFunction extends Function {
   constructor(f) {
-    console.log("ExtensibleFunction", f);
     return Object.setPrototypeOf(f, new.target.prototype);
   }
 }
 
-
 class HttpError extends Error {
   constructor(message, status) {
-    console.log("HttpError", message, status);
     const schema = Joi.object({
       message: Joi.string(),
       status: Joi.number(),
@@ -49,7 +46,7 @@ class ErrorHandlerMiddleware extends ExtensibleFunction {
     this.options = validated;
     this.logger = validated.logger;
 
-    return this.bind(this); 
+    return this.bind(this);
 
   }
 
@@ -77,11 +74,9 @@ class ErrorHandlerMiddleware extends ExtensibleFunction {
     }
 
     if (!eIoHe && lue && !l5e) { //unhandled error
-      console.log("(!eIoHe && lue && !l5e)")
       this.logger.error(error);
     }
     if (l5e && httpError.status == 500) {
-      console.log("(l5e && httoError.status == 500)");
       this.logger.error(error);
     }
 

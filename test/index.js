@@ -40,11 +40,9 @@ const errorHandlerMiddlewareOptions = {
   logger: mockLogger,
 }
 const errorHandlerMiddlewareInstance = new ErrorHandlerMiddleware(errorHandlerMiddlewareOptions);
-console.log(errorHandlerMiddlewareInstance, errorHandlerMiddlewareInstance.length)
 
 
 before(async function() {
-  console.log("before()");
 
   const rootPath = path.join(__dirname, "routes");
   const app = express();
@@ -52,17 +50,14 @@ before(async function() {
     return response.json({pong: true});
   })
   app.post("/httperror400", function(request, response, next) {
-    console.log("httperror400");
     const error = new HttpError("400 error", 400);
     return next(error);
   })
   app.post("/httperror500", function(request, response, next) {
-    console.log("error")
     const error = new HttpError("500 error", 500);
     return next(error);
   })
   app.post("/error", function(request, response, next) {
-    console.log("error")
     const error = new Error("Default error");
     return next(error);
   })
@@ -86,14 +81,12 @@ describe("handle HttpError", () => {
 
   it("should successfully return HttpError with code 400", async function() {
     const response = await context.request.post("/httperror400").expect(400);
-    console.log(response.body);
     assert.equal(mockLogger.errors.length, 0);
     mockLogger.reset();
   })
 
   it("should successfully return HttpError with code 500", async function() {
     const response = await context.request.post("/httperror500").expect(500)
-    console.log(response.body);
     const expectedLogs = Number(errorHandlerMiddlewareOptions.log500Errors);
     assert.equal(mockLogger.errors.length, expectedLogs);
     mockLogger.reset();
@@ -101,7 +94,6 @@ describe("handle HttpError", () => {
 
   it("should successfully return default Error with code 500", async function() {
     const response = await context.request.post("/error").expect(500)
-    console.log(response.body);
     if (errorHandlerMiddlewareOptions.concealErrors) {
       assert.equal(response.body.message, errorMessage);
     }
@@ -113,6 +105,5 @@ describe("handle HttpError", () => {
 })
 
 after(async () => {
-  console.log("after()");
   context.server.close();
 });
