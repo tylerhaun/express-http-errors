@@ -1,4 +1,9 @@
+# Express HTTP Errors
 
+[![Build status](https://img.shields.io/travis/tylerhaun/express-http-errors/master.svg?style=flat-square)](https://travis-ci.org/tylerhaun/express-http-errors)
+
+
+HTTP errors + middleware handler for express
 
 
 ### USE
